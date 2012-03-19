@@ -6,4 +6,4 @@ This is a simple script to help sniping auctions on Gumtree.
 Cron example
 ------------
 
-    0 * * * * /path/to/gumtree-sniper --state /var/tmp/my-search.txt search terms here
+    0 * * * * /path/to/gumtree-sniper --cron --state /var/tmp/my-search.txt search terms here

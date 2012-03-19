@@ -20,6 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import sys
 import urllib
 import urllib2
 import optparse
@@ -34,6 +35,13 @@ TEMPLATE = """%(title)s (%(location)s, %(price)s)
 def main():
     parser = optparse.OptionParser(
         usage="usage: %prog [options] <query>",
+    )
+
+    parser.add_option('-c', '--cron',
+        dest='cron',
+        help="Use non-zero exit code if items found",
+        action='store_true',
+        default=False,
     )
 
     parser.add_option('-l', '--location',
@@ -53,6 +61,7 @@ def main():
     if not args:
         parser.error("No search query specified")
 
+    exit = 0
     seen = get_state(options.state_file)
     query = ' '.join(args)
 
@@ -62,7 +71,11 @@ def main():
 
         print TEMPLATE % listing
 
+        exit = 1
         set_state(options.state_file, listing['url'])
+
+    if options.cron:
+        sys.exit(exit)
 
 def get_url(location, query):
     base = 'http://www.gumtree.com/cgi-bin/list_postings.pl'
