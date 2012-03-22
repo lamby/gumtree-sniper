@@ -94,10 +94,15 @@ def parse(url):
     for x in soup('li', attrs={'class': 'hlisting offer-sale '}):
         url = 'http://www.gumtree.com%s' % by_class(x, 'a', 'description')['href']
 
+        try:
+            price = by_class(x, 'span', 'price').contents[0][1:]
+        except AttributeError:
+            price = '(no price)'
+
         yield {
             'url': url,
             'title': by_class(x, 'a', 'description')['title'].strip(),
-            'price': by_class(x, 'span', 'price').contents[0][1:],
+            'price': price,
             'location': by_class(x, 'span', 'location').contents[0],
         }
 
