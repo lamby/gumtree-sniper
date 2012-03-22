@@ -97,7 +97,7 @@ def parse(url):
         try:
             price = by_class(x, 'span', 'price').contents[0][1:]
         except AttributeError:
-            price = '(no price)'
+            price = "No price specified"
 
         yield {
             'url': url,
