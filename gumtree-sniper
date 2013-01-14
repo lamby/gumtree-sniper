@@ -95,15 +95,13 @@ def parse(url):
     re_item = re.compile(r'^hlisting offer-sale ')
 
     for x in soup('li', attrs={'class': re_item}):
-        url = 'http://www.gumtree.com%s' % by_class(x, 'a', 'description')['href']
-
         try:
             price = by_class(x, 'span', 'price').contents[0][1:]
         except AttributeError:
             price = "No price specified"
 
         yield {
-            'url': url,
+            'url': by_class(x, 'a', 'description')['href'],
             'title': by_class(x, 'a', 'description')['title'].strip(),
             'price': price,
             'location': by_class(x, 'span', 'location').contents[0],
