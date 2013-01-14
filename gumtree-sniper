@@ -28,7 +28,7 @@ import fileinput
 
 from BeautifulSoup import BeautifulSoup
 
-TEMPLATE = """%(title)s (%(location)s, %(price)s)
+TEMPLATE = """%(title)s (%(location)s, GBP %(price)s)
 %(url)s
 """
 
