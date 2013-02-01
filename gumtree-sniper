@@ -97,6 +97,7 @@ def parse(url):
     for x in soup('li', attrs={'class': re_item}):
         try:
             price = by_class(x, 'span', 'price').contents[0][1:]
+            price = price.encode('ascii', 'ignore')
         except AttributeError:
             price = "No price specified"
 
